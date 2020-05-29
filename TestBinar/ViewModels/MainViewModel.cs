@@ -13,7 +13,7 @@ namespace TestBinar.ViewModels
     {
 
         ObservableCollection<Diskret> _diskretCollection = new ObservableCollection<Diskret>();
-        private Orientation _orientation = Orientation.Horizontal;
+        private Orientation _orientation = Orientation.Vertical;
 
         public Orientation Orientation
         {
