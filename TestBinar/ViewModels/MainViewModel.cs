@@ -28,11 +28,20 @@ namespace TestBinar.ViewModels
             DXMessageBox.Show(((Tile)e).Content.ToString());
         }
 
-
+        private bool state;
         [Command]
         public void DiskretDoubleClick(object e)
         {
-
+            if (state)
+            {
+                Orientation = Orientation.Horizontal;
+                state = !state;
+            }
+            else
+            {
+                Orientation = Orientation.Vertical;
+                state = !state;
+            }
         }
         public ObservableCollection<Diskret> DiskretCollection
         {

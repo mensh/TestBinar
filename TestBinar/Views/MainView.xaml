@@ -7,7 +7,7 @@
     xmlns:dxmvvm="http://schemas.devexpress.com/winfx/2008/xaml/mvvm" 
     xmlns:ViewModels="clr-namespace:TestBinar.ViewModels"
     xmlns:model="clr-namespace:TestBinar.Model"
-    mc:Ignorable="d" d:DesignHeight="300" d:DesignWidth="300">
+    mc:Ignorable="d" d:DesignHeight="800" d:DesignWidth="1024">
     <UserControl.DataContext>
         <ViewModels:MainViewModel/>
     </UserControl.DataContext>
@@ -22,10 +22,19 @@
             </Style.Triggers>
             <Setter Property="Background" Value="Blue" />
         </Style>
+
+        <DataTemplate x:Key="DataTemplate">
+            <dxlc:Tile x:Name="tile_control" VerticalHeaderAlignment="Top" Padding="0"  
+                       Content="{Binding Name}"  
+                       Height="50" Width="150" MinWidth="150"  dxlc:TileLayoutControl.GroupHeader="{Binding GroupHeader}"  
+                       ScrollViewer.CanContentScroll="True" Style="{StaticResource Styles}" >
+               
+            </dxlc:Tile>
+        </DataTemplate>
     </UserControl.Resources>
 
     <Grid>
-        <dxlc:TileLayoutControl ItemsSource="{Binding DiskretCollection}" AllowGroupHeaderEditing="True" Orientation="{Binding Orientation}" Name="tile_layout_control" ShowGroupHeaders="True" TileClickCommand="{Binding DiskretClickCommand}" >
+        <dxlc:TileLayoutControl ItemsSource="{Binding DiskretCollection}" ItemTemplate="{StaticResource DataTemplate}" AllowGroupHeaderEditing="True" Orientation="{Binding Orientation}" Name="tile_layout_control" ShowGroupHeaders="True" TileClickCommand="{Binding DiskretClickCommand}" LayerSpace="4" ItemSpace="5" GroupHeaderSpace="6" >
             <dxlc:TileLayoutControl.GroupHeaderStyle>
                 <Style TargetType="dxlc:TileGroupHeader">
                     <Setter Property="Foreground" Value="Black"/>
@@ -34,19 +43,9 @@
                     <Setter Property="FontWeight" Value="Light"/>
                 </Style>
             </dxlc:TileLayoutControl.GroupHeaderStyle>
-            <dxlc:TileLayoutControl.ItemTemplate>
-                <DataTemplate>
-                    <dxlc:Tile x:Name="tile_control" VerticalHeaderAlignment="Top" Padding="0"  
-                               Content="{Binding Name}"  
-                               Height="50" Width="150" MinWidth="150"  dxlc:TileLayoutControl.GroupHeader="{Binding GroupHeader}"  
-                               ScrollViewer.CanContentScroll="True" Style="{StaticResource Styles}" >
-                        <dxmvvm:Interaction.Triggers>
-                            <dxmvvm:EventToCommand EventName="MouseRightBottonDown" PassEventArgsToCommand="True" Command="{Binding DataContext.MyCommnandClass.DiskretDoubleClickCommand, RelativeSource={RelativeSource AncestorType=Window}}" />
-                            </dxmvvm:Interaction.Triggers>
-                    </dxlc:Tile>
-                </DataTemplate>
-            </dxlc:TileLayoutControl.ItemTemplate>
-
+            <dxmvvm:Interaction.Triggers>
+                <dxmvvm:EventToCommand EventName="MouseRightButtonUp" PassEventArgsToCommand="True" Command="{Binding DiskretDoubleClickCommand}" />
+            </dxmvvm:Interaction.Triggers>
         </dxlc:TileLayoutControl>
 
     </Grid>
